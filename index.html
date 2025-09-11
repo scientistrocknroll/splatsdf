@@ -30,6 +30,18 @@
   <link rel="stylesheet" href="./static/css/app.css">
   <link rel="stylesheet" href="./static/css/select.css">
   <script src="./static/js/select.js"></script>
+
+ <!-- MathJax (LaTeX in HTML) -->
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], processEscapes: true },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  
   <!-- for image slider -->
   <script src="./static/js/video_comparison.js"></script>
   <link rel="stylesheet" href="./static/css/dics.min.css">
@@ -110,13 +122,19 @@
         <div class="content has-text-justified">
             <div class="content has-text-justified">
                 <p>
-                    We focus on three modules - Dynamic GS (a) Segmentation & Flow, (b) Management and (c) Tracking & Prediction. 
-                    DynaGSLAM takes RGBD sequence as input to construct map with GS, (a) segment dynamic GS from static GS in 3D, 
-                    and estimate dynamic GS 3D motion flow between frames. (b) Dynamic GS are managed separately from static GS 
-                    with GS flow, but combined to jointly optimize. Case 1&2 are the rules for dynamic GS adding; "Cond. 1&2" denotes 
-                    the conditions for dynamic GS deletion. (c) The optimized dynamic GS at current and past frames are used to 
-                    interpolate/extrapolate dynamic GS in the continuous timeline from past to future. "CHS" refers to "cubic 
-                    Hermite spline" and "LF" refers to "linear function". Please refer to the paper for details.
+                   Our SplatSDF takes posed RGB images and 3DGS to train an SDF-NeRF. We use
+    3DGS-rendered depths to identify the anchor point and shift the closest query
+    point to the anchor point. With a shared hash encoder, we extract query-point
+    SDF embeddings \(e_{sdf}\) and 3DGS embeddings \(e_{gs}\). Our method applies
+    a 3DGS aggregator to merge the 3DGS attributes: mean \(\mu\), covariance
+    \(\Sigma\), color \(c\), and spherical harmonics \(SH\). We propose a novel
+    <em>surface 3DGS fusion</em> to fuse \(e_{gs}\) and \(e_{sdf}\) only around
+    the anchor point and regress to SDF. With a density function, SDF is converted
+    to per-point density \(\sigma(x)\). We take the geometric features \(g(x)\),
+    the surface normal from SDF \(n(x)\), the query-point coordinates \(x\) and
+    the viewing angle \(v\) to estimate per-point color \(c(x)\) and obtain the
+    per-pixel color \(\hat{C}\) by volumetric rendering to supervise with input
+    images.
                 </p>
               </div>
               <div class="b-dics" style="float: center">
@@ -207,4 +225,5 @@
 
 
 </body>
+
 </html>
