@@ -103,7 +103,7 @@
             We propose SplatSDF, a novel SDF-NeRF architecture that accelerates convergence using 3D Gaussian splats (3DGS), which can be quickly pre-trained. 
           Unlike prior approaches that introduce a consistency loss between separate 3DGS and SDF-NeRF models, 
             SplatSDF directly fuses 3DGS at an architectural level by consuming it as an input to SDF-NeRF during training.
-        This is achieved using a novel \emph{sparse 3DGS fusion} strategy that injects neural embeddings of 3DGS into SDF-NeRF around the object surface, 
+        This is achieved using a novel *sparse 3DGS fusion* strategy that injects neural embeddings of 3DGS into SDF-NeRF around the object surface, 
             while also permitting inference without 3DGS for minimal operation. 
             Experimental results show SplatSDF achieves 3$\times$ faster convergence to the same geometric accuracy than the best baseline, 
             and outperforms state-of-the-art SDF-NeRF methods in terms of chamfer distance and peak signal to noise ratio, 
@@ -121,19 +121,19 @@ We expect these improvements will contribute to deploying SDF-NeRF on practical 
         <div class="content has-text-justified">
             <div class="content has-text-justified">
                 <p>
-                   Our SplatSDF takes posed RGB images and 3DGS to train an SDF-NeRF. We use
-    3DGS-rendered depths to identify the anchor point and shift the closest query
-    point to the anchor point. With a shared hash encoder, we extract query-point
+                   SplatSDF takes posed RGB images and 3DGS to train an SDF-NeRF model. We use
+    3DGS-rendered depth to identify the anchor point and shift the closest query
+    point to the anchor point. With a shared hash encoder, we construct query-point
     SDF embeddings \(e_{sdf}\) and 3DGS embeddings \(e_{gs}\). Our method applies
-    a 3DGS aggregator to merge the 3DGS attributes: mean \(\mu\), covariance
-    \(\Sigma\), color \(c\), and spherical harmonics \(SH\). We propose a novel
-    <em>surface 3DGS fusion</em> to fuse \(e_{gs}\) and \(e_{sdf}\) only around
-    the anchor point and regress to SDF. With a density function, SDF is converted
+    a <em>3DGS aggregator</em> to merge the 3DGS attributes: mean \(\mu\), covariance
+    \(\Sigma\), color \(c\), and spherical harmonics \(SH\). A novel
+    <em>surface 3DGS fusion</em> strategy merges \(e_{gs}\) and \(e_{sdf}\) only around
+    the anchor points and regress the SDF value. The SDF value is converted
     to per-point density \(\sigma(x)\). We take the geometric features \(g(x)\),
     the surface normal from SDF \(n(x)\), the query-point coordinates \(x\) and
     the viewing angle \(v\) to estimate per-point color \(c(x)\) and obtain the
-    per-pixel color \(\hat{C}\) by volumetric rendering to supervise with input
-    images.
+    per-pixel color \(\hat{C}\) by volumetric rendering, supervised with input
+    images. Our contribution is the design of the <em>3DGS aggregator</em> and the <em>surface 3DGS fusion</em>.
                 </p>
               </div>
               <div class="b-dics" style="float: center">
@@ -226,4 +226,5 @@ We expect these improvements will contribute to deploying SDF-NeRF on practical 
 </body>
 
 </html>
+
 
