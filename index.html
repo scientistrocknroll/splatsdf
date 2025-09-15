@@ -67,7 +67,7 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">SplatSDF: Boosting Neural Implicit SDF via Gaussian Splatting Fusion</h1>
+          <h1 class="title is-1 publication-title">SplatSDF: Boosting SDF-NeRF via Architecture-Level Fusion with Gaussian Splats</h1>
           <div class="is-size-3 publication-authors">
             <span class="author-block">
               <!--HAHA<sup>1</sup>, HAHA<sup>1</sup>, HAHA<sup>1</sup>--> </span> 
@@ -97,20 +97,19 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            A signed distance function (SDF) is a useful representation for continuous-space geometry and many related operations, 
-            including rendering, collision checking, and mesh generation. Hence, reconstructing SDF from image observations 
-            accurately and efficiently is a fundamental problem. Recently, neural implicit SDF (SDF-NeRF) techniques, 
-            trained using volumetric rendering, have gained a lot of attention. Compared to earlier truncated SDF (TSDF) 
-            fusion algorithms that rely on depth maps and voxelize continuous space, SDF-NeRF enables continuous-space SDF 
-            reconstruction with better geometric and photometric accuracy. However, the accuracy and convergence speed of 
-            scene-level SDF reconstruction require further improvements for many applications. With the advent of 3D Gaussian 
-            Splatting (3DGS) as an explicit representation with excellent rendering quality and speed, several works have focused 
-            on improving SDF-NeRF by introducing consistency losses on depth and surface normals between 3DGS and SDF-NeRF. However, 
-            loss-level connections alone lead to incremental improvements. We propose a novel neural implicit SDF called "SplatSDF" 
-            to fuse 3DGS and SDF-NeRF at an architecture level with significant boosts to geometric and photometric accuracy and 
-            convergence speed. Our SplatSDF relies on 3DGS as input <em>only during training</em>, and keeps the same complexity and 
-            efficiency as the original SDF-NeRF during inference. Our method outperforms state-of-the-art SDF-NeRF models on 
-            geometric and photometric evaluation by the time of submission.
+          Signed distance-radiance field (SDF-NeRF) is a promising environment representation that offers both photorealistic 
+            rendering and geometric reasoning such as proximity queries for collision avoidance.
+          However, the slow training speed and convergence of SDF-NeRF hinder their use in practical robotic systems. 
+            We propose SplatSDF, a novel SDF-NeRF architecture that accelerates convergence using 3D Gaussian splats (3DGS), which can be quickly pre-trained. 
+          Unlike prior approaches that introduce a consistency loss between separate 3DGS and SDF-NeRF models, 
+            SplatSDF directly fuses 3DGS at an architectural level by consuming it as an input to SDF-NeRF during training.
+        This is achieved using a novel \emph{sparse 3DGS fusion} strategy that injects neural embeddings of 3DGS into SDF-NeRF around the object surface, 
+            while also permitting inference without 3DGS for minimal operation. 
+            Experimental results show SplatSDF achieves 3$\times$ faster convergence to the same geometric accuracy than the best baseline, 
+            and outperforms state-of-the-art SDF-NeRF methods in terms of chamfer distance and peak signal to noise ratio, 
+            unlike consistency loss-based approaches that in fact provide limited gains.
+We also present computational techniques for accelerating gradient and Hessian steps by $3\times$.
+We expect these improvements will contribute to deploying SDF-NeRF on practical systems. 
           </p>
         </div>
       </div>
@@ -227,3 +226,4 @@
 </body>
 
 </html>
+
